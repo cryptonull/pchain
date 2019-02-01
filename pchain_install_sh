@@ -39,8 +39,6 @@ function run_pchain() {
     echo 'run the NODE'
     sleep 2
     cd ~/pchain/
-    pwd
-    sleep 2
     ./bin/pchain -datadir .pchain init .pchain/pchain/eth_genesis.json
     ./bin/pchain -datadir .pchainDevAccount init_eth_genesis "{10000000000000000000000000000000000, 100}"
     cp .pchainDevAccount/pchain/priv_validator.json .pchain/pchain
