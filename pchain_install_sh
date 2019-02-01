@@ -18,7 +18,7 @@ function go_inst() {
     echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
     source ~/.profile
     rm go1.11.5.linux-amd64.tar.gz
-    echo 'done1'
+    echo 'done!'
     sleep 2
     clear
 }
