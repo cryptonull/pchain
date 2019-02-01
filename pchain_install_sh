@@ -1,32 +1,38 @@
 #!/bin/bash
+function up_inst() {
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt-get install build-essential unzip zip curl nano wget git ufw
+ }
 
-#updating the system
-echo 'updating ...'
-sleep 2
-apt update
-apt upgrade -y
-apt autoremove -y 
-clear
-echo 'installing unzip ...'
-sleep 2
-apt install unzip
-clear
-echo done
-sleep 2
-echo 'installing PCHAIN...'
-sleep 2
-cd ~
-echo 'download...'
-wget https://github.com/pchain-org/pchain/releases/download/pre-release/pchain_init_dirs.zip
-echo 'install and start...'
-sleep 2
-unzip pchain_init_dirs.zip
-mv pchain_init_dirs/pchain .
-cd pchain/
-find . -name '*.sh' | xargs chmod +x
-chmod +x bin/pchain
-./bin/pchain -datadir .pchain init .pchain/pchain/eth_genesis.json
-./bin/pchain -datadir .pchainDevAccount init_eth_genesis "{10000000000000000000000000000000000, 100}"
-cp .pchainDevAccount/pchain/priv_validator.json .pchain/pchain
-cp -r .pchainDevAccount/pchain/keystore .pchain/pchain/
-./run_pchain.sh
+function go_inst() {
+wget https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.11.5.linux-amd64.tar.gz
+   echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+    source ~/.profile
+    rm go1.11.5.linux-amd64.tar.gz
+}
+
+function compile() {
+    
+    git clone https://github.com/pchain-org/pchain.git
+    cd pchain
+    make pchain && strip pchain
+    
+    }
+
+
+function run_pchain() {
+    
+    cd pchain/
+    ./bin/pchain -datadir .pchain init .pchain/pchain/eth_genesis.json
+    ./bin/pchain -datadir .pchainDevAccount init_eth_genesis "{10000000000000000000000000000000000, 100}"
+    cp .pchainDevAccount/pchain/priv_validator.json .pchain/pchain
+    cp -r .pchainDevAccount/pchain/keystore .pchain/pchain/
+./bin/pchain --datadir=.pchain --networkid=10000 --port=30201 --rpc --rpcport=6969 --rpcaddr=0.0.0.0 --rpccorsdomain=* --rpcapi=db,eth,net,web3,admin,tdm,miner,personal,chai$
+    }
+
+up_inst
+go_inst
+compile
+run_pchain
