@@ -29,6 +29,11 @@ function compile() {
     git clone https://github.com/pchain-org/pchain.git
     cd pchain
     make pchain && strip ./bin/pchain
+    echo 'remove old pchain...'
+    sudo rm /usr/local/bin/pchain
+    echo 'removed'
+    echo 'copy the new one in /usr/local/bin/'
+    sudo cp ./bin/pchain /usr/local/bin/
     echo 'done!'
     sleep 2
     clear
@@ -46,8 +51,16 @@ function run_pchain() {
     ./bin/pchain --datadir=.pchain --networkid=10000 --port=30201 --rpc --rpcport=6969 --rpcaddr=0.0.0.0 --rpccorsdomain=* --rpcapi=db,eth,net,web3,admin,tdm,miner,personal,chain,txpool --targetgaslimit=97123880000 --syncmode "full" --gcmode=archive --verbosity=4 > ./log/pchain.log 2>&1 &
     echo 'WELCOME TO PCHAIN'
     }
+    
+function run_testnet() {
+    echo 'run the testnet ... '
+    pchain --testnet  &
+    echo 'done! welcome on PCHAIN TEST NET'
+    sleep 2
+    }
 
 up_inst
 go_inst
 compile
-run_pchain
+#run_pchain
+run_testnet
