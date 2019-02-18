@@ -4,7 +4,7 @@ function up_inst() {
     sleep 2
     sudo apt update
     sudo apt upgrade -y
-    sudo apt-get install build-essential unzip zip curl nano wget git ufw -y
+    sudo apt-get install build-essential unzip zip curl nano git ufw -y
     echo 'done!'
     sleep 2 
     clear
